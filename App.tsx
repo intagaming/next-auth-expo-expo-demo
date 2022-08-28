@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { SessionProvider, useSession, signIn } from "next-auth/expo";
+import { SessionProvider, useSession, signIn, signOut } from "next-auth/expo";
 import { signinGithub } from "./src/ExpoAuth";
 
 const InnerApp = () => {
@@ -15,6 +15,12 @@ const InnerApp = () => {
           onPress={() => signIn("github-expo", signinGithub)}
           title="Sign in with GitHub"
         />
+      )}
+      {status === "authenticated" && (
+        <>
+          <Text>You are {session.user?.name}</Text>
+          <Button onPress={() => signOut()} title="Sign out" />
+        </>
       )}
       <StatusBar style="auto" />
     </View>
