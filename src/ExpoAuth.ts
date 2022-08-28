@@ -10,14 +10,8 @@ export const signinGithub = async (): Promise<SigninResult> => {
     Alert.alert("Error", "Couldn't get sign in info from server");
     return;
   }
-  const {
-    state,
-    codeChallenge,
-    csrfTokenCookie,
-    stateEncrypted,
-    codeVerifier,
-    clientId,
-  } = signinInfo;
+  const { state, codeChallenge, stateEncrypted, codeVerifier, clientId } =
+    signinInfo;
 
   // This corresponds to useLoadedAuthRequest
   const request = new AuthSession.AuthRequest({
@@ -42,7 +36,6 @@ export const signinGithub = async (): Promise<SigninResult> => {
   return {
     result,
     state,
-    csrfTokenCookie,
     stateEncrypted,
     codeVerifier,
     provider,
