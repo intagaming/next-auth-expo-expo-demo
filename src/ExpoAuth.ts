@@ -1,18 +1,8 @@
 import * as AuthSession from "expo-auth-session";
-import { getSignInInfo } from "next-auth/expo";
+import { getSignInInfo, SigninResult } from "next-auth/expo";
 import { Alert } from "react-native";
 
-export type SigninResult = {
-  result: AuthSession.AuthSessionResult;
-  state: string;
-  csrfTokenCookie: string;
-  stateEncrypted: string;
-  codeVerifier?: string;
-  proxyRedirectUri: string;
-  provider: string;
-};
-
-export const signinGithub = async () => {
+export const signinGithub = async (): Promise<SigninResult> => {
   const proxyRedirectUri = AuthSession.makeRedirectUri({ useProxy: true }); // https://auth.expo.io
   const provider = "github-expo";
   const signinInfo = await getSignInInfo({ provider, proxyRedirectUri });
@@ -28,7 +18,6 @@ export const signinGithub = async () => {
     codeVerifier,
     clientId,
   } = signinInfo;
-  console.log(signinInfo.clientId);
 
   // This corresponds to useLoadedAuthRequest
   const request = new AuthSession.AuthRequest({
@@ -56,7 +45,6 @@ export const signinGithub = async () => {
     csrfTokenCookie,
     stateEncrypted,
     codeVerifier,
-    proxyRedirectUri,
     provider,
   };
 };
